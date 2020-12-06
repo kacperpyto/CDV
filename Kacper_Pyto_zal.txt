@@ -1,0 +1,24 @@
+2. select employees.firstName,employees.lastName,offices.country,COUNT(customers.salesRepEmployeeNumber) as liczba_obslugiwanych_pracownikow from employees
+ inner JOIN customers on employees.employeeNumber = customers.salesRepEmployeeNumber
+ INNER JOIN offices ON employees.officeCode = offices.officeCode 
+group by employees.employeeNumber
+
+4. select 
+year(orderDate),
+sum(quantityordered*priceeach)
+from orderdetails
+join products on orderdetails.productCode = products.productCode
+join orders on orderdetails.orderNumber = orders.orderNumber
+where productName = "1969 Harley Davidson Ultimate Chopper"
+group by year(orderDate)
+
+SELECT `products`.productName, YEAR(`orders`.orderDate) AS order_year, SUM(IFNULL(`orderdetails`.`priceEach`, 0)) AS orders_price FROM `products`
+INNER JOIN `orderdetails` ON `orderdetails`.productCode = `products`.`productCode`
+INNER JOIN `orders` ON `orders`.orderNumber = `orderdetails`.orderNumber
+WHERE `products`.productName LIKE "%1969 Harley Davidson%"
+GROUP BY `products`.productName, YEAR(`orders`.orderDate)
+
+SELECT `productlines`.productLine, COUNT(`products`.`productCode`) as product_count FROM `productlines`
+INNER JOIN `products` ON `productlines`.productLine = `products`.`productLine`
+GROUP BY `productlines`.productLine
+HAVING COUNT(`products`.`productCode`) > 10
